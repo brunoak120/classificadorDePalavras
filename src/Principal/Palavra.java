@@ -9,13 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Palavra {
-	final String[] vogais = { "a", "e", "i", "o", "u", "„", "ı", "‚", "Í", "Ù", "·", "È", "Ì", "Û", "˙" };
+	final String[] vogais = { "a", "e", "i", "o", "u", "√£", "√µ", "√¢", "√™", "√¥", "√°", "√©", "√≠", "√≥", "√∫" };
 	final String[] consoantes = { "b", "c", "d", "f", "g", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w",
 			"x", "z" };
 	String palavra, palavraSeparada, palavraMinuscula, hiato;
-	Integer pontosDeClassificaÁ„o, quantiDadeSilabas, quantidaDeLetras;
+	Integer pontosDeClassificacao, quantiDadeSilabas, quantidaDeLetras;
 
-	// Construtor padr„o que recebe a palavra
+	// Construtor padr√£o que recebe a palavra
 	public Palavra(String palavra) throws IOException {
 		
 		this.palavra = palavra;
@@ -28,7 +28,7 @@ public class Palavra {
 
 	// Metodo que faz uma analise geral da palavra
 	public void AnalisarPalavra() {
-		System.out.println("SeparaÁ„o Silabica da palavra " + palavra + ": " + palavraSeparada);
+		System.out.println("Separa√ß√£o Silabica da palavra " + palavra + ": " + palavraSeparada);
 		System.out.println("Total de letras: " + quantidaDeLetras);
 		System.out.println("Total de Silabas: " + quantiDadeSilabas);
 		if (isVogaisIdenticas()) {
@@ -38,39 +38,39 @@ public class Palavra {
 			System.out.println("Possui encontro do L ou do R com consoante");
 		}
 		if (isTritongo()) {
-			System.out.println("… uma palavra Tritongo");
+			System.out.println("√â uma palavra Tritongo");
 		} else {
 			if (isDitongo() && !palavraSeparada.contains(this.hiato)) {
-				System.out.println("… uma palavra Hiato");
+				System.out.println("√â uma palavra Hiato");
 			}else if(isDitongo() ) {
-				System.out.println("… uma palavra Ditongo");
+				System.out.println("√â uma palavra Ditongo");
 			}
 		}
 		if (isDigrafo()) {
-			System.out.println("… uma palavra Digrafo onde n„o h· separaÁ„o sil·bica");
+			System.out.println("√â uma palavra Digrafo onde n√£o h√° separa√ß√£o sil√°bica");
 		}
 		if (isOutrosDigrafo()) {
-			System.out.println("… uma palavra Dirgrafo onde h· separaÁ„o sil·bica");
+			System.out.println("√â uma palavra Dirgrafo onde h√° separa√ß√£o sil√°bica");
 		}
 	}
 
-	// Metodo que faz a separaÁ„o sil·bica da palavra
+	// Metodo que faz a separa√ß√£o sil√°bica da palavra
 	public String SeparaSilabas(String palavra) throws IOException {
 		URL url = new URL("https://www.dicio.com.br/" + Normalizer.normalize(palavra, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
 		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
 		String inputLine;
 		while ((inputLine = in.readLine()) != null) {
-			if (inputLine.contains("SeparaÁ„o sil·bica: <b>")) {
+			if (inputLine.contains("Separa√ß√£o sil√°bica: <b>")) {
 				return inputLine.substring(
-						inputLine.indexOf("SeparaÁ„o sil·bica: <b>") + "SeparaÁ„o sil·bica: <b>".length(),
+						inputLine.indexOf("Separa√ß√£o sil√°bica: <b>") + "Separa√ß√£o sil√°bica: <b>".length(),
 						inputLine.lastIndexOf("</b><br />"));
 			}
 
 		}
 
 		in.close();
-		return "Palavra n„o encontrada";
+		return "Palavra n√£o encontrada";
 	}
 	
 	// Metodo que conta as silabas da palavra
@@ -85,9 +85,9 @@ public class Palavra {
 		return quantidade+1;
 	}
 
-	//Metodo que verifica a existencia de vogais identicas na palavra e cc e cÁ
+	//Metodo que verifica a existencia de vogais identicas na palavra e cc e c√ß
 	public Boolean isVogaisIdenticas() {
-		if (palavraMinuscula.contains("cc") || palavraMinuscula.contains("cÁ")) {
+		if (palavraMinuscula.contains("cc") || palavraMinuscula.contains("c√ß")) {
 			return true;
 		}
 
@@ -109,7 +109,7 @@ public class Palavra {
 		return false;
 	}
 
-	// Metodo que verifica se a palavra È ditongo
+	// Metodo que verifica se a palavra √© ditongo
 	public Boolean isDitongo() {
 		for (int i = 0; i < vogais.length; i++) {
 			for (int j = 0; j < vogais.length; j++) {
@@ -122,7 +122,7 @@ public class Palavra {
 		return false;
 	}
 
-	// Metodo que verifica se a palavra È dÌgrafo onde n„o h· separaÁ„o sil·bica
+	// Metodo que verifica se a palavra √© d√≠grafo onde n√£o h√° separa√ß√£o sil√°bica
 	public Boolean isDigrafo() {
 		if (palavraMinuscula.contains("ch") || palavraMinuscula.contains("lh") || palavraMinuscula.contains("gu")
 				|| palavraMinuscula.contains("qu")) {
@@ -132,11 +132,11 @@ public class Palavra {
 		}
 	}
 
-	// Metodo que verifica outros digrafos que quando encontrados na palavra h·
-	// separaÁ„o sil·bica
+	// Metodo que verifica outros digrafos que quando encontrados na palavra h√°
+	// separa√ß√£o sil√°bica
 	public Boolean isOutrosDigrafo() {
 		if (palavraMinuscula.contains("rr") || palavraMinuscula.contains("ss") || palavraMinuscula.contains("sc")
-				|| palavraMinuscula.contains("sÁ") || palavraMinuscula.contains("xs")
+				|| palavraMinuscula.contains("s√ß") || palavraMinuscula.contains("xs")
 				|| palavraMinuscula.contains("xc")) {
 			return true;
 		} else {
@@ -144,7 +144,7 @@ public class Palavra {
 		}
 	}
 
-	// Metodo que verifica se a palavra È tritongo
+	// Metodo que verifica se a palavra √© tritongo
 	public Boolean isTritongo() {
 		for (int i = 0; i < vogais.length; i++) {
 			for (int j = 0; j < vogais.length; j++) {
@@ -163,10 +163,10 @@ public class Palavra {
 		return palavraMinuscula.length();
 	}
 
-	// Metodo onde faz a pontuaÁ„o avaliando os acentos da palavra
+	// Metodo onde faz a pontua√ß√£o avaliando os acentos da palavra
 	public static Integer PontuaAcentos(String word) { // Classe para analisar os acentos das palavras
 		Integer counter = 0;
-		Pattern padrao = Pattern.compile("[a-z A-Z]*"); // A-Z a-z separados permitem "" (espaÁo)
+		Pattern padrao = Pattern.compile("[a-z A-Z]*"); // A-Z a-z separados permitem "" (espa√ßo)
 		Matcher pesquisa = padrao.matcher(word);
 		if (pesquisa.matches()) {
 			counter += 1;
@@ -191,12 +191,12 @@ public class Palavra {
 		this.palavraSeparada = palavraSeparada;
 	}
 
-	public Integer getPontosDeClassificaÁ„o() {
-		return pontosDeClassificaÁ„o;
+	public Integer getPontosDeClassificacao() {
+		return pontosDeClassificacao;
 	}
 
-	public void setPontosDeClassificaÁ„o(Integer pontosDeClassificaÁ„o) {
-		this.pontosDeClassificaÁ„o = pontosDeClassificaÁ„o;
+	public void setPontosDeClassificacao(Integer pontosDeClassificacao) {
+		this.pontosDeClassificacao = pontosDeClassificacao;
 	}
 
 	public Integer getQuantidadeSilabas() {
