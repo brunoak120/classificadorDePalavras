@@ -61,6 +61,7 @@ public class Palavra {
 
 		String inputLine;
 		while ((inputLine = in.readLine()) != null) {
+			System.out.println(inputLine);
 			if (inputLine.contains("Separação silábica: <b>")) {
 				return inputLine.substring(
 						inputLine.indexOf("Separação silábica: <b>") + "Separação silábica: <b>".length(),

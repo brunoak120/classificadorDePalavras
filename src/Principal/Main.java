@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in)); // objeto para leitura da palavra
-		Palavra palavra = new Palavra("peteca"); //instanciando um objeto do tipo palavra e fazendo a leitura
+		Palavra palavra = new Palavra("cabeça"); //instanciando um objeto do tipo palavra e fazendo a leitura
 		palavra.AnalisarPalavra();
 		/*System.out.println("###############################");
 		Palavra palavra1 = new Palavra("caneta");
