@@ -25,6 +25,19 @@ public class Palavra {
 		this.quantidaDeLetras = QuantidadeLetras(palavra);
 		
 	}
+	
+	public CharSequence imprimirArray() {
+		String palavra = "";
+		palavra += "'categoria_id' => 3, \n";
+		palavra += "'nome' => '"+ this.palavra +"', \n";
+		palavra += "'letras' => '" + quantidaDeLetras + "', \n";
+		palavra += "'silabas' => '" + quantiDadeSilabas + "', \n";
+		palavra += "'created_at' => $now, \n";
+		palavra += "'updated_at' => $now, \n";
+		palavra += "], [ \n";
+		
+		return palavra;
+	}
 
 	// Metodo que faz uma analise geral da palavra
 	public void AnalisarPalavra() {
@@ -56,21 +69,27 @@ public class Palavra {
 
 	// Metodo que faz a separação silábica da palavra
 	public String SeparaSilabas(String palavra) throws IOException {
-		URL url = new URL("https://www.dicio.com.br/" + Normalizer.normalize(palavra, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-
-		String inputLine;
-		while ((inputLine = in.readLine()) != null) {
-			System.out.println(inputLine);
-			if (inputLine.contains("Separação silábica: <b>")) {
-				return inputLine.substring(
-						inputLine.indexOf("Separação silábica: <b>") + "Separação silábica: <b>".length(),
-						inputLine.lastIndexOf("</b><br />"));
+		try {
+			palavra = palavra.replace( " ", "-" );
+			URL url = new URL("https://www.dicio.com.br/" + Normalizer.normalize(palavra, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", ""));
+			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+	
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {
+				//System.out.println(inputLine);
+				if (inputLine.contains("Separação silábica: <b>")) {
+					return inputLine.substring(
+							inputLine.indexOf("Separação silábica: <b>") + "Separação silábica: <b>".length(),
+							inputLine.lastIndexOf("</b><br />"));
+				}
+	
 			}
-
+			
+			in.close();
+		} catch  (java.io.FileNotFoundException e) {
+			return "null";
 		}
 
-		in.close();
 		return "Palavra não encontrada";
 	}
 	
